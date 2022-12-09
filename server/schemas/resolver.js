@@ -38,7 +38,7 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        saveBook: async (parent, { description, bookID, title }) => {
+        saveBook: async (parent, { user, description, bookID, title }) => {
             const user = await User.findOneAndUpdate(
                 { _id: user._id },
                 { $addToset: { savedBooks: { description, bookID, title } } },
@@ -46,7 +46,7 @@ const resolvers = {
                 { new: true, runValidators: true }
             );
         },
-        removeBook: async (parent, { bookID }) => {
+        removeBook: async (parent, { user, bookID }) => {
             const user = await User.findOneAndUpdate(
                 { _id: user._id },
                 { $pull: { savedBooks: { bookId: bookID } } },
