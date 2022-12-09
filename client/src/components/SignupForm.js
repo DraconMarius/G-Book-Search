@@ -4,7 +4,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 // import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER } from '../utils/mutation';
+import { CREATE_USER } from '../utils/mutations';
 
 const SignupForm = () => {
   // set initial form state
@@ -15,7 +15,7 @@ const SignupForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   //use Mutation instead of API routes
-  const [createUser] = useMutation(CREATE_USER)
+  const [createUser] = useMutation(CREATE_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -33,19 +33,19 @@ const SignupForm = () => {
     }
 
     try {
+
       const { data } = await createUser({
         variables: { ...userFormData }
       });
 
       // if (!data) {
       //   throw new Error('something went wrong!');
-      // }
-
+      //
       // const { token, user } = await data.json();
 
-      Auth.login(data.token);
+      Auth.login(data.createUser.token);
     } catch (err) {
-      console.error(err);
+      console.log(err);
       setShowAlert(true);
     }
 

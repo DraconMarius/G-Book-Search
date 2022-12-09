@@ -5,7 +5,7 @@ import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap
 
 // import { getMe } from '../utils/API';
 import { useMutation, useQuery } from '@apollo/client';
-import { DELETEBOOK } from '../utils/mutation';
+import { DELETEBOOK } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
 
 import Auth from '../utils/auth';
