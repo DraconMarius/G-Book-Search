@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
-const routes = require('./routes');
+// const routes = require('./routes');
 
 //importing ApolloServer to set up backend
 const { ApolloServer } = require('apollo-server-express');
@@ -44,7 +44,7 @@ const startApolloServer = async (typeDefs, resovlers) => {
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API Server on PORT ${PORT}`);
-      coneole.log(`GraphQL @ http://localhost:${PORT}`)
+      console.log(`GraphQL @ http://localhost:${PORT}/graphql`)
     });
   });
 };

@@ -4,6 +4,7 @@ import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'reac
 import Auth from '../utils/auth';
 import { searchGoogleBooks } from '../utils/API';
 //importing mutation
+import { useMutation } from '@apollo/client';
 import { SAVEBOOK } from '../utils/mutation';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
@@ -79,7 +80,7 @@ const SearchBooks = () => {
         }
       });
 
-      if (!response.ok) {
+      if (!data) {
         throw new Error('something went wrong!');
       }
 

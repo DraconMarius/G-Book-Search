@@ -1,14 +1,22 @@
-const { User, Book } = require('../models');
+const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
     //query resovler for our get routes
     Query: {
-        users: async () => {
-            return await User.find({}).populate('savedBooks');
+        me: async (parent, args, context) => {
+            if (context.user) {
+                const userData = await User.findOne({ _id: context.user._id })
+
+                return userData;
+            }
         },
-        user: async () => {
-            return await User.findById(args.id).populate('savedBooks');
+
+        users: async () => {
+            return await User.find({});
+        },
+        user: async (parent, args) => {
+            return await User.findById(args.id);
         },
     },
 
@@ -19,7 +27,7 @@ const resolvers = {
             //doing our JWT token here since we are no longer using express server routes
             const token = signToken(user);
 
-            return (token, profile);
+            return (token, user);
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
@@ -38,17 +46,17 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        saveBook: async (parent, { user, description, bookID, title }) => {
+        saveBook: async (parent, { description, bookID, title }, context) => {
             const user = await User.findOneAndUpdate(
-                { _id: user._id },
+                { _id: context.userID },
                 { $addToset: { savedBooks: { description, bookID, title } } },
                 //return updated user's savedBook list
                 { new: true, runValidators: true }
             );
         },
-        removeBook: async (parent, { user, bookID }) => {
+        deleteBook: async (parent, { bookID }, context) => {
             const user = await User.findOneAndUpdate(
-                { _id: user._id },
+                { _id: context.userID },
                 { $pull: { savedBooks: { bookId: bookID } } },
                 { new: true }
             );
