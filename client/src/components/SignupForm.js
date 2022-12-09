@@ -15,7 +15,7 @@ const SignupForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   //use Mutation instead of API routes
-  const [createUser, { error, data }] = useMutation(CREATE_USER)
+  const [createUser] = useMutation(CREATE_USER)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,13 +37,13 @@ const SignupForm = () => {
         variables: { ...userFormData }
       });
 
-      if (!data) {
-        throw new Error('something went wrong!');
-      }
+      // if (!data) {
+      //   throw new Error('something went wrong!');
+      // }
 
-      const { token, user } = await data.json();
-      console.log(user);
-      Auth.login(token);
+      // const { token, user } = await data.json();
+
+      Auth.login(data.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
