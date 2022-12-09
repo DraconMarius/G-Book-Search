@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
+//making sure appollo set up on client side
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 function App() {
   return (
