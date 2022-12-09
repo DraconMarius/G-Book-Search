@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-// import { saveBook, searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks } from '../utils/API';
 //importing mutation
 import { SAVEBOOK } from '../utils/mutation';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
@@ -18,7 +18,7 @@ const SearchBooks = () => {
 
   //use Mutation set up
   const [saveBook, { error, data }] = useMutation(SAVEBOOK);
-  const user = data?.user || null;
+  // const user = data?.user || null;
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -72,7 +72,10 @@ const SearchBooks = () => {
     try {
       await saveBook({
         variables: {
-          userID: user._id, bookToSave
+          userID: Auth.getProfile().data._id,
+          description: bookToSave.description,
+          bookID: bookToSave.bookID,
+          title: bookToSave.title,
         }
       });
 
