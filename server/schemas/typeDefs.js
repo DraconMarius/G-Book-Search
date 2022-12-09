@@ -34,9 +34,9 @@ type Query{
 }
 
 type mutation{
-    createUser(username: String!, email: String!): Auth
+    createUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    saveBook(userID: ID!, description: String!, bookID: String!, title: String! ): User
+    saveBook(description: String!, bookID: String!, title: String! ): User
     deleteBook(userID: ID!, bookID: String!): User
 }
 
