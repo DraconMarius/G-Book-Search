@@ -34,11 +34,7 @@ const SignupForm = () => {
 
     try {
       const { data } = await createUser({
-        variables: {
-          username: userFormData.username,
-          email: userFormData.email,
-          password: userFormData.password,
-        }
+        variables: { ...userFormData }
       });
 
       if (!data) {
