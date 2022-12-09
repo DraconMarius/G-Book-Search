@@ -25,9 +25,8 @@ const resolvers = {
         createUser: async (parent, args) => {
             const user = await User.create(args);
             //doing our JWT token here since we are no longer using express server routes
-            const token = signToken(user);
 
-            return (token, user);
+            return (user);
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
@@ -42,7 +41,7 @@ const resolvers = {
                 console.error("Incorrect PW, please try again");
             };
             //only if correct password, then create JWT, and return 
-            //both token to be stored on client, and profile for render
+            //both token and suer obj to be stored on client, and profile for render
             const token = signToken(user);
             return { token, user };
         },
