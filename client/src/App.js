@@ -12,6 +12,7 @@ import { setContext } from '@apollo/client/link/context';
 //making sure client know to reach out to graphQL
 const httpLink = createHttpLink({
   uri: '/graphql',
+  // uri: "http://localhost:3001/graphql"
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -38,9 +39,9 @@ function App() {
         <>
           <Navbar />
           <Switch>
-            <Route path='/' element={<SearchBooks />} />
-            <Route path='/saved' element={<SavedBooks />} />
-            {/* <Route render={() => <h1 className='display-2'>Wrong page!</h1>} /> */}
+            <Route exact path="/" component={SearchBooks} />
+            <Route exact path="/saved" component={SavedBooks} />
+            <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Switch>
         </>
       </Router>

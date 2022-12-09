@@ -22,8 +22,8 @@ const resolvers = {
 
     //mutation for our Post / Delete
     Mutation: {
-        createUser: async (parent, { name, email, password }) => {
-            const user = await User.create({ name, email, password });
+        createUser: async (parent, args) => {
+            const user = await User.create(args);
             //doing our JWT token here since we are no longer using express server routes
             const token = signToken(user);
 
@@ -53,6 +53,7 @@ const resolvers = {
                 //return updated user's savedBook list
                 { new: true, runValidators: true }
             );
+            return user;
         },
         deleteBook: async (parent, { bookID }, context) => {
             const user = await User.findOneAndUpdate(
@@ -60,6 +61,7 @@ const resolvers = {
                 { $pull: { savedBooks: { bookId: bookID } } },
                 { new: true }
             );
+            return user;
         },
     },
 };
